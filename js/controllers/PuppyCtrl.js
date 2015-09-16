@@ -1,10 +1,19 @@
-app.controller("PuppyCtrl",["$scope","$http", function($scope, $http){
+app.controller("PuppyCtrl",["$scope","$http", 'puppyService',
+                          function($scope, $http, puppyService){
 
-  $http.get('https://pacific-stream-9205.herokuapp.com/puppies.json').then(function(response) {
-      $scope.puppies = response["data"];
-  }, function(response) {
-    // called asynchronously if an error occurs
-    // or server returns response with an error status.
+  $scope.puppies = [];
+
+  $scope.getPuppies = function(){
+    $scope.puppies = puppyService.getPuppies();
+    console.log('inside get puppies');
+    console.log($scope.puppies);
+  };
+
+  // getting breeds list
+  $http.get('https://pacific-stream-9205.herokuapp.com/breeds.json').then(function(response) {
+      $scope.breeds = response["data"];
   });
+
+
 
 }]);
